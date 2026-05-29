@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consultoría con Propósito</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F5F0;--surface:#FFF;--surface2:#F0EDE6;--border:#E2DDD5;--text:#1A1814;--text2:#6B6560;--text3:#A09A92;--accent:#2D5016;--accent-l:#EAF0E1;--accent2:#1a4a8a;--accent2-l:#E8F0FB;--danger:#C0392B;--danger-l:#FDECEA;--amber:#B8860B;--amber-l:#FEF9E7;--r:12px;--rsm:8px;--sh:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.04);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;}
+.app{display:flex;min-height:100vh;}
+.sidebar{width:255px;background:var(--text);color:#F7F5F0;padding:1.75rem 1.25rem;display:flex;flex-direction:column;gap:1.5rem;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100;}
+.main{margin-left:255px;flex:1;padding:2.25rem 2.5rem;max-width:calc(100vw - 255px);}
+.logo{font-family:'DM Serif Display',serif;font-size:19px;line-height:1.25;}
+.logo em{color:#8FC45A;font-style:normal;}
+.slabel{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#4A5A3A;margin-bottom:6px;}
+.ci{padding:7px 10px;border-radius:var(--rsm);cursor:pointer;font-size:13px;color:#C8C4BC;border:1px solid transparent;margin-bottom:3px;display:flex;align-items:center;gap:7px;transition:all .15s;}
+.ci:hover{background:rgba(255,255,255,.07);color:#F7F5F0;}
+.ci.on{background:rgba(143,196,90,.15);border-color:rgba(143,196,90,.3);color:#8FC45A;}
+.ci .dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.ci-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+.btn-new-s{width:100%;padding:8px 10px;background:rgba(255,255,255,.07);border:1px dashed rgba(255,255,255,.18);border-radius:var(--rsm);color:#C8C4BC;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;transition:all .15s;}
+.btn-new-s:hover{background:rgba(255,255,255,.12);color:#F7F5F0;}
+.nl{display:flex;flex-direction:column;gap:2px;}
+.nl-item{padding:7px 9px;border-radius:var(--rsm);cursor:pointer;font-size:13px;color:#C8C4BC;display:flex;align-items:center;gap:8px;transition:all .15s;}
+.nl-item:hover{background:rgba(255,255,255,.07);color:#F7F5F0;}
+.nl-item.on{background:rgba(255,255,255,.1);color:#F7F5F0;}
+.nl-item svg{width:15px;height:15px;flex-shrink:0;opacity:.75;}
+.ph{margin-bottom:1.75rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.ph h1{font-family:'DM Serif Display',serif;font-size:26px;font-weight:400;line-height:1.2;}
+.ph p{font-size:13px;color:var(--text2);margin-top:3px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.35rem 1.4rem;margin-bottom:1.1rem;box-shadow:var(--sh);}
+.ct{font-family:'DM Serif Display',serif;font-size:17px;font-weight:400;margin-bottom:3px;}
+.field{margin-bottom:1rem;}
+.field label{display:block;font-size:13px;font-weight:500;margin-bottom:5px;}
+input[type=text],input[type=password],textarea,select{width:100%;padding:9px 11px;font-size:14px;border:1px solid var(--border);border-radius:var(--rsm);background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.5;transition:border-color .15s;}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-l);}
+textarea{min-height:78px;resize:vertical;}
+input::placeholder,textarea::placeholder{color:var(--text3);}
+.stars-row{display:flex;gap:5px;margin-top:4px;}
+.star{width:36px;height:36px;border:1px solid var(--border);border-radius:var(--rsm);background:var(--surface);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .12s;}
+.star:hover{border-color:var(--accent);color:var(--accent);}
+.star.on{background:var(--accent-l);border-color:var(--accent);color:var(--accent);}
+.tags-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.tag{padding:4px 11px;border:1px solid var(--border);border-radius:20px;font-size:12px;color:var(--text2);cursor:pointer;background:var(--surface);transition:all .12s;}
+.tag:hover{border-color:var(--accent);color:var(--accent);}
+.tag.on{background:var(--accent-l);border-color:var(--accent);color:var(--accent);}
+.btn{padding:8px 18px;font-size:13px;border:1px solid var(--border);border-radius:var(--rsm);background:var(--surface);color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s;display:inline-flex;align-items:center;gap:6px;}
+.btn:hover{background:var(--surface2);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btnp{background:var(--accent);color:#fff;border-color:var(--accent);}
+.btnp:hover{background:#223D0F;}
+.btnd{background:var(--accent2-l);color:var(--accent2);border-color:var(--accent2);}
+.btndanger{background:var(--danger-l);color:var(--danger);border-color:var(--danger);}
+.btndanger:hover{background:var(--danger);color:#fff;}
+.bsm{padding:5px 13px;font-size:12px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.2rem;box-shadow:var(--sh);}
+.stat .sl{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:5px;}
+.stat .sv{font-family:'DM Serif Display',serif;font-size:26px;}
+.stat .sd{font-size:12px;color:var(--text2);margin-top:3px;}
+.pbar{height:3px;background:var(--surface2);border-radius:2px;margin-bottom:1.75rem;overflow:hidden;}
+.pfill{height:100%;background:linear-gradient(90deg,var(--accent),#8FC45A);border-radius:2px;transition:width .4s ease;}
+hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0;}
+.empty{text-align:center;padding:4rem 2rem;color:var(--text2);}
+.empty h2{font-family:'DM Serif Display',serif;font-size:22px;font-weight:400;margin-bottom:8px;color:var(--text);}
+.alert{padding:11px 14px;border-radius:var(--rsm);font-size:13px;margin-bottom:1rem;display:flex;align-items:flex-start;gap:8px;}
+.alert-info{background:var(--accent-l);color:var(--accent);}
+.alert-blue{background:var(--accent2-l);color:var(--accent2);}
+.alert-amber{background:var(--amber-l);color:var(--amber);}
+.alert-danger{background:var(--danger-l);color:var(--danger);}
+.modal-ov{position:fixed;inset:0;background:rgba(26,24,20,.5);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(2px);}
+.modal{background:var(--surface);border-radius:var(--r);padding:1.75rem;width:90%;max-width:480px;max-height:90vh;overflow-y:auto;}
+.modal h2{font-family:'DM Serif Display',serif;font-size:21px;font-weight:400;margin-bottom:1rem;}
+.modal-act{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;}
+.ptabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.25rem;}
+.ptab{padding:6px 13px;border:1px solid var(--border);border-radius:var(--rsm);background:var(--surface);color:var(--text2);cursor:pointer;font-size:13px;display:flex;align-items:center;gap:6px;transition:all .12s;}
+.ptab.on{background:var(--text);color:#fff;border-color:var(--text);}
+.avatar{width:22px;height:22px;border-radius:50%;background:var(--accent-l);color:var(--accent);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+.ptab.on .avatar{background:rgba(255,255,255,.2);color:#fff;}
+.st{font-family:'DM Serif Display',serif;font-size:14px;color:var(--text2);margin:1.1rem 0 .75rem;display:flex;align-items:center;gap:8px;}
+.st::after{content:'';flex:1;height:1px;background:var(--border);}
+.file-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:var(--rsm);margin-bottom:6px;background:var(--surface);font-size:13px;}
+.file-item .fname{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.file-item .fsize{color:var(--text3);font-size:11px;}
+.file-ext{width:30px;height:30px;border-radius:6px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:var(--text2);text-transform:uppercase;}
+.drop-zone{border:2px dashed var(--border);border-radius:var(--r);padding:2rem;text-align:center;cursor:pointer;background:var(--surface);transition:all .15s;}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--accent);background:var(--accent-l);}
+.drop-zone p{font-size:13px;color:var(--text2);margin-top:6px;}
+.dots{display:inline-flex;gap:4px;align-items:center;}
+.dots span{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:bk 1.2s infinite ease-in-out;}
+.dots span:nth-child(2){animation-delay:.2s;}
+.dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bk{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+.report-section{margin-bottom:1.75rem;}
+.report-section h2{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:.65rem;padding-bottom:.5rem;border-bottom:2px solid var(--accent-l);}
+.report-section h3{font-size:14px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin:1rem 0 .4rem;}
+.report-section p{font-size:14px;line-height:1.85;margin-bottom:.65rem;}
+.report-section ul{padding-left:1.2rem;}
+.report-section ul li{font-size:14px;margin-bottom:3px;}
+.sync-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11px;}
+.sync-ok{background:var(--accent-l);color:var(--accent);}
+.sync-saving{background:var(--amber-l);color:var(--amber);}
+.sync-err{background:var(--danger-l);color:var(--danger);}
+.mh{display:none;background:var(--text);color:#F7F5F0;padding:.9rem 1.25rem;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:150;}
+.hbg{background:none;border:none;color:#F7F5F0;cursor:pointer;font-size:22px;}
+.sov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:90;}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.login-card{background:var(--surface);border-radius:var(--r);padding:2.5rem;max-width:400px;width:100%;box-shadow:var(--sh);}
+.login-card h1{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:.5rem;}
+.login-card p{color:var(--text2);font-size:14px;margin-bottom:1.5rem;}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .25s;}
+  .sidebar.open{transform:translateX(0);}
+  .sov.open{display:block;}
+  .main{margin-left:0;max-width:100vw;padding:1.1rem;}
+  .mh{display:flex;}
+  .g2,.g3{grid-template-columns:1fr;}
+  .ph{flex-direction:column;}
+}
+@media print{
+  .sidebar,.mh,.btn,.no-print,input,textarea,.drop-zone,.ptabs,.nl,.pbar{display:none!important;}
+  .main{margin-left:0;padding:0;}
+  .card{box-shadow:none;break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<div id="loginView" style="display:none;">
+  <div class="login-wrap">
+    <div class="login-card">
+      <h1>Consultoría con Propósito</h1>
+      <p>Introduce la contraseña para acceder a tu espacio de trabajo.</p>
+      <div class="field">
+        <input type="password" id="passInput" placeholder="Contraseña" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="btn btnp" style="width:100%;justify-content:center;" onclick="doLogin()">Entrar</button>
+      <div id="loginErr" style="color:var(--danger);font-size:13px;margin-top:1rem;text-align:center;display:none;">Contraseña incorrecta</div>
+    </div>
+  </div>
+</div>
+
+<div id="appView" style="display:none;">
+<div class="mh">
+  <button class="hbg" onclick="toggleSidebar()">☰</button>
+  <span style="font-family:'DM Serif Display',serif;font-size:16px;">Consultoría</span>
+  <span></span>
+</div>
+<div class="sov" id="sov" onclick="toggleSidebar()"></div>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">Consultoría<br><em>con Propósito</em></div>
+    <div>
+      <div class="slabel">Consultorías</div>
+      <div id="clist"></div>
+      <button class="btn-new-s" onclick="showNewModal()">+ Nueva consultoría</button>
+    </div>
+    <div style="margin-top:auto;">
+      <div id="syncStatus"></div>
+      <div class="nl" id="navLinks" style="margin-top:1rem;"></div>
+    </div>
+  </aside>
+  <main class="main"><div id="appContent"></div></main>
+</div>
+</div>
+
+<div class="modal-ov" id="modalOv" style="display:none;">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<script>
+// ── AUTH ──
+var PWD = sessionStorage.getItem('cwp_pwd') || '';
+
+async function doLogin() {
+  var v = document.getElementById('passInput').value;
+  try {
+    var r = await fetch('/check-auth', { headers: { 'x-app-password': v } });
+    var d = await r.json();
+    if (d.ok) {
+      PWD = v;
+      sessionStorage.setItem('cwp_pwd', v);
+      showApp();
+    } else {
+      document.getElementById('loginErr').style.display = 'block';
+    }
+  } catch (e) {
+    document.getElementById('loginErr').textContent = 'Error de conexión';
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+
+function showApp() {
+  document.getElementById('loginView').style.display = 'none';
+  document.getElementById('appView').style.display = 'block';
+  loadConsultancies();
+}
+
+async function checkAuth() {
+  if (!PWD) {
+    document.getElementById('loginView').style.display = 'block';
+    return false;
+  }
+  try {
+    var r = await fetch('/check-auth', { headers: { 'x-app-password': PWD } });
+    var d = await r.json();
+    if (d.ok) { showApp(); return true; }
+    sessionStorage.removeItem('cwp_pwd');
+    document.getElementById('loginView').style.display = 'block';
+    return false;
+  } catch (e) {
+    document.getElementById('loginView').style.display = 'block';
+    return false;
+  }
+}
+
+// ── API ──
+async function api(path, opts) {
+  opts = opts || {};
+  opts.headers = opts.headers || {};
+  opts.headers['x-app-password'] = PWD;
+  if (opts.body && typeof opts.body === 'object') {
+    opts.body = JSON.stringify(opts.body);
+    opts.headers['Content-Type'] = 'application/json';
+  }
+  var r = await fetch(path, opts);
+  if (!r.ok) {
+    var err = await r.json().catch(() => ({ error: 'Error' }));
+    throw new Error(err.error || 'Error ' + r.status);
+  }
+  return r.json();
+}
+
+// ── STATE ──
+var S = {
+  list: [],
+  active: null,
+  current: null,
+  page: 'dashboard',
+  persona: null,
+  reportLoading: false,
+  activeReport: null,
+  syncStatus: 'ok',
+  saveTimer: null
+};
+
+function setSync(s) {
+  S.syncStatus = s;
+  var el = document.getElementById('syncStatus');
+  if (!el) return;
+  var labels = { ok: '✓ Sincronizado', saving: '⟳ Guardando...', err: '✗ Error al guardar' };
+  var classes = { ok: 'sync-ok', saving: 'sync-saving', err: 'sync-err' };
+  el.innerHTML = '<span class="sync-badge ' + classes[s] + '">' + labels[s] + '</span>';
+}
+
+async function loadConsultancies() {
+  try {
+    S.list = await api('/api/consultancies');
+    if (S.list.length > 0 && !S.active) {
+      await selectC(S.list[0].id);
+    }
+    renderSidebar();
+    if (!S.current) renderContent();
+  } catch (e) {
+    alert('Error cargando datos: ' + e.message);
+  }
+}
+
+async function selectC(id) {
+  S.active = id;
+  S.page = 'dashboard';
+  S.persona = null;
+  S.activeReport = null;
+  try {
+    S.current = await api('/api/consultancies/' + id);
+    if (!S.current.data) S.current.data = {};
+    if (!S.current.data.contexto) S.current.data.contexto = {};
+    if (!S.current.data.estructura) S.current.data.estructura = {};
+    if (!Array.isArray(S.current.data.entrevistas)) S.current.data.entrevistas = [];
+    if (!S.current.data.procesos) S.current.data.procesos = {};
+    if (!S.current.data.herramientas) S.current.data.herramientas = {};
+    if (!S.current.data.sintesis) S.current.data.sintesis = {};
+    if (!Array.isArray(S.current.archivos)) S.current.archivos = [];
+    renderSidebar();
+    renderContent();
+    if (window.innerWidth < 768) toggleSidebar();
+  } catch (e) {
+    alert('Error: ' + e.message);
+  }
+}
+
+function debouncedSave() {
+  setSync('saving');
+  if (S.saveTimer) clearTimeout(S.saveTimer);
+  S.saveTimer = setTimeout(saveCurrent, 800);
+}
+
+async function saveCurrent() {
+  if (!S.current) return;
+  try {
+    await api('/api/consultancies/' + S.current.id, { method: 'PUT', body: S.current });
+    setSync('ok');
+  } catch (e) {
+    setSync('err');
+  }
+}
+
+// ── NAV ──
+var NAV=[
+  {id:'dashboard',label:'Vista general',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>'},
+  {id:'contexto',label:'Contexto previo',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>'},
+  {id:'estructura',label:'Estructura',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>'},
+  {id:'entrevistas',label:'Entrevistas',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'},
+  {id:'procesos',label:'Procesos',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>'},
+  {id:'herramientas',label:'Herramientas',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'},
+  {id:'archivos',label:'Archivos',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>'},
+  {id:'sintesis',label:'Síntesis',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>'},
+  {id:'informe',label:'Informes',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>'},
+  {id:'admin',label:'Administración',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7C5 4 4 5 4 7z"/><path d="M8 10h8M8 14h8M8 18h5"/></svg>'}
+];
+
+function nav(p){if(p!=='informe')S.activeReport=null;S.page=p;renderSidebar();renderContent();if(window.innerWidth<768)toggleSidebar();}
+
+function renderSidebar(){
+  var cl=document.getElementById('clist');
+  if(cl) cl.innerHTML=S.list.length===0
+    ?'<div style="font-size:12px;color:#4A5040;padding:4px 0;">Sin consultorías aún</div>'
+    :S.list.map(function(c){
+      return '<div class="ci '+(c.id===S.active?'on':'')+'" onclick="selectC(\''+c.id+'\')">'+
+        '<span class="dot"></span><span class="ci-name">'+esc(c.nombre||'Sin nombre')+'</span></div>';
+    }).join('');
+  var nl=document.getElementById('navLinks');
+  if(nl) nl.innerHTML=NAV.map(function(n){
+    return '<div class="nl-item '+(S.page===n.id?'on':'')+'" onclick="nav(\''+n.id+'\')">'+n.icon+n.label+'</div>';
+  }).join('');
+  setSync(S.syncStatus);
+}
+
+// ── MODAL ──
+function showModal(html){document.getElementById('modalBox').innerHTML=html;document.getElementById('modalOv').style.display='flex';}
+function closeModal(){document.getElementById('modalOv').style.display='none';}
+
+function showNewModal(){
+  showModal('<h2>Nueva consultoría</h2>'+
+    field('m_emp','Empresa / organización','Ej: Cadena Hotelera Sol')+
+    field('m_dep','Departamento','Ej: Recursos Humanos')+
+    field('m_fec','Fecha de visita','Ej: 3 de junio de 2025')+
+    field('m_con','Consultora responsable','Tu nombre')+
+    '<div class="modal-act">'+
+      '<button class="btn" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn btnp" onclick="createC()">Crear consultoría</button>'+
+    '</div>');
+}
+
+function field(id,label,ph){return '<div class="field"><label>'+label+'</label><input type="text" id="'+id+'" placeholder="'+esc(ph)+'" /></div>';}
+
+async function createC(){
+  var emp=document.getElementById('m_emp').value.trim();
+  if(!emp){alert('Indica el nombre de la empresa');return;}
+  var dep=document.getElementById('m_dep').value.trim();
+  var c={
+    id:'c_'+Date.now(),
+    nombre:emp+(dep?' — '+dep:''),
+    empresa:emp,depto:dep,
+    fecha:document.getElementById('m_fec').value.trim(),
+    consultora:document.getElementById('m_con').value.trim(),
+    data:{contexto:{},estructura:{},entrevistas:[],procesos:{},herramientas:{},sintesis:{}},
+    archivos:[]
+  };
+  try {
+    await api('/api/consultancies', { method: 'POST', body: c });
+    closeModal();
+    await loadConsultancies();
+    await selectC(c.id);
+  } catch (e) { alert('Error: ' + e.message); }
+}
+
+// ── HELPERS ──
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function fInput(sid,id,label,ph,val){return '<div class="field"><label>'+label+'</label><input type="text" value="'+esc(val||'')+'" placeholder="'+esc(ph||'')+'" oninput="setD(\''+sid+'\',\''+id+'\',this.value)" /></div>';}
+function fTA(sid,id,label,ph,val){return '<div class="field"><label>'+label+'</label><textarea placeholder="'+esc(ph||'')+'" oninput="setD(\''+sid+'\',\''+id+'\',this.value)">'+esc(val||'')+'</textarea></div>';}
+function fStars(sid,id,label,val){var v=val||0;var h='<div class="field"><label>'+label+'</label><div class="stars-row">';for(var n=1;n<=5;n++)h+='<button class="star '+(v==n?'on':'')+'" onclick="setD(\''+sid+'\',\''+id+'\','+n+');renderContent()">'+n+'</button>';return h+'</div></div>';}
+function fTags(sid,id,label,opts,val){var v=val||[];var h='<div class="field"><label>'+label+'</label><div class="tags-row">';opts.forEach(function(o){h+='<span class="tag '+(v.indexOf(o)>-1?'on':'')+'" onclick="toggleTag(\''+sid+'\',\''+id+'\',\''+o+'\')">'+o+'</span>';});return h+'</div></div>';}
+
+function setD(sec,key,val){if(!S.current)return;if(!S.current.data[sec])S.current.data[sec]={};S.current.data[sec][key]=val;debouncedSave();}
+function toggleTag(sec,key,opt){if(!S.current)return;if(!S.current.data[sec])S.current.data[sec]={};var arr=S.current.data[sec][key]?S.current.data[sec][key].slice():[];var i=arr.indexOf(opt);if(i>-1)arr.splice(i,1);else arr.push(opt);S.current.data[sec][key]=arr;debouncedSave();renderContent();}
+
+// ── PERSONAS ──
+function inits(n){return n.split(' ').slice(0,2).map(function(w){return w[0];}).join('').toUpperCase();}
+
+function addPersonaModal(){
+  showModal('<h2>Añadir persona</h2>'+
+    field('mp_n','Nombre','Ej: Laura García')+
+    field('mp_c','Cargo / rol','Ej: Técnica de RRHH')+
+    field('mp_a','Antigüedad','Ej: 3 años')+
+    '<div class="modal-act">'+
+      '<button class="btn" onclick="closeModal()">Cancelar</button>'+
+      '<button class="btn btnp" onclick="savePersona()">Añadir</button>'+
+    '</div>');
+}
+
+function savePersona(){
+  var n=document.getElementById('mp_n').value.trim();
+  if(!n){alert('El nombre es obligatorio');return;}
+  var p={id:'p_'+Date.now(),nombre:n,cargo:document.getElementById('mp_c').value.trim(),antiguedad:document.getElementById('mp_a').value.trim(),resp:{}};
+  S.current.data.entrevistas.push(p);S.persona=p.id;debouncedSave();closeModal();renderContent();
+}
+
+function delPersona(pid){
+  if(!confirm('¿Eliminar esta entrevista?'))return;
+  S.current.data.entrevistas=S.current.data.entrevistas.filter(function(p){return p.id!==pid;});
+  S.persona=S.current.data.entrevistas.length>0?S.current.data.entrevistas[0].id:null;
+  debouncedSave();renderContent();
+}
+
+function setPR(pid,key,val){var p=S.current.data.entrevistas.find(function(x){return x.id===pid;});if(!p)return;if(!p.resp)p.resp={};p.resp[key]=val;debouncedSave();}
+function togglePTag(pid,key,opt){var p=S.current.data.entrevistas.find(function(x){return x.id===pid;});if(!p)return;if(!p.resp)p.resp={};var arr=p.resp[key]?p.resp[key].slice():[];var i=arr.indexOf(opt);if(i>-1)arr.splice(i,1);else arr.push(opt);p.resp[key]=arr;debouncedSave();renderContent();}
+function setPStars(pid,key,val){var p=S.current.data.entrevistas.find(function(x){return x.id===pid;});if(!p)return;if(!p.resp)p.resp={};p.resp[key]=val;debouncedSave();renderContent();}
+
+function pTA(pid,key,label,ph,val){return '<div class="field"><label>'+label+'</label><textarea placeholder="'+esc(ph||'')+'" oninput="setPR(\''+pid+'\',\''+key+'\',this.value)">'+esc(val||'')+'</textarea></div>';}
+function pStars(pid,key,label,val){var v=val||0;var h='<div class="field"><label>'+label+'</label><div class="stars-row">';for(var n=1;n<=5;n++)h+='<button class="star '+(v==n?'on':'')+'" onclick="setPStars(\''+pid+'\',\''+key+'\','+n+')">'+n+'</button>';return h+'</div></div>';}
+function pTags(pid,key,label,opts,val){var v=val||[];var h='<div class="field"><label>'+label+'</label><div class="tags-row">';opts.forEach(function(o){h+='<span class="tag '+(v.indexOf(o)>-1?'on':'')+'" onclick="togglePTag(\''+pid+'\',\''+key+'\',\''+o+'\')">'+o+'</span>';});return h+'</div></div>';}
+
+// ── PROGRESS ──
+function hasData(c,s){
+  if(s==='entrevistas')return c.data.entrevistas&&c.data.entrevistas.length>0;
+  if(s==='archivos')return(c.archivos||[]).length>0;
+  var d=(c.data&&c.data[s])||{};
+  return Object.keys(d).some(function(k){var v=d[k];return v&&(Array.isArray(v)?v.length>0:String(v).trim()!='');});
+}
+function calcProg(c){var secs=['contexto','estructura','entrevistas','procesos','herramientas','sintesis'];return Math.round((secs.filter(function(s){return hasData(c,s);}).length/secs.length)*100);}
+
+// ── RENDER ──
+function renderContent(){
+  var el=document.getElementById('appContent');
+  if(!el)return;
+  // Admin doesn't need an active consultancy
+  if(S.page==='admin'){renderAdmin(el);return;}
+  if(!S.current){
+    el.innerHTML='<div class="empty"><h2>Bienvenida, Eva María</h2><p>Crea tu primera consultoría para empezar.</p><button class="btn btnp" onclick="showNewModal()">+ Nueva consultoría</button></div>';
+    return;
+  }
+  switch(S.page){
+    case 'dashboard':renderDash(el);break;
+    case 'contexto':renderContexto(el);break;
+    case 'estructura':renderEstructura(el);break;
+    case 'entrevistas':renderEntrevistas(el);break;
+    case 'procesos':renderProcesos(el);break;
+    case 'herramientas':renderHerramientas(el);break;
+    case 'archivos':renderArchivos(el);break;
+    case 'sintesis':renderSintesis(el);break;
+    case 'informe':renderInforme(el);break;
+    default:renderDash(el);
+  }
+}
+
+function renderDash(el){
+  var c=S.current;
+  var prog=calcProg(c);
+  var secs=[
+    {id:'contexto',label:'Contexto previo'},
+    {id:'estructura',label:'Estructura'},
+    {id:'entrevistas',label:'Entrevistas ('+(c.data.entrevistas||[]).length+' personas)'},
+    {id:'procesos',label:'Procesos'},
+    {id:'herramientas',label:'Herramientas'},
+    {id:'archivos',label:'Archivos ('+(c.archivos||[]).length+')'},
+    {id:'sintesis',label:'Síntesis'}
+  ];
+  el.innerHTML='<div class="ph"><div><h1>'+esc(c.nombre)+'</h1><p>'+(c.fecha||'Fecha por definir')+(c.consultora?' · '+esc(c.consultora):'')+'</p></div>'+
+    '<div style="display:flex;gap:7px;flex-wrap:wrap;"><button class="btn bsm btnp" onclick="nav(\'informe\')">Generar informe</button><button class="btn bsm btndanger" onclick="delConsultConfirm()">Eliminar</button></div></div>'+
+    '<div class="pbar"><div class="pfill" style="width:'+prog+'%"></div></div>'+
+    '<div class="g3" style="margin-bottom:1.25rem;">'+
+      '<div class="stat"><div class="sl">Entrevistas</div><div class="sv">'+((c.data.entrevistas||[]).length)+'</div><div class="sd">personas registradas</div></div>'+
+      '<div class="stat"><div class="sl">Archivos</div><div class="sv">'+((c.archivos||[]).length)+'</div><div class="sd">documentos adjuntos</div></div>'+
+      '<div class="stat"><div class="sl">Progreso</div><div class="sv">'+prog+'%</div><div class="sd">secciones completadas</div></div>'+
+    '</div>'+
+    '<div class="card"><div class="ct">Secciones</div><hr/>'+
+    secs.map(function(s){var done=hasData(c,s.id);return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;"><span style="width:8px;height:8px;border-radius:50%;flex-shrink:0;background:'+(done?'var(--accent)':'var(--border)')+'"></span><span style="font-size:13px;color:'+(done?'var(--text)':'var(--text3)')+'">'+s.label+'</span><button class="btn bsm" style="margin-left:auto;padding:3px 10px;font-size:11px;" onclick="nav(\''+s.id+'\')">→</button></div>';}).join('')+
+    '</div>';
+}
+
+function renderContexto(el){
+  var d=S.current.data.contexto||{};
+  el.innerHTML='<div class="ph"><div><h1>Contexto previo</h1><p>Rellena antes de la visita</p></div></div>'+
+    '<div class="card">'+
+    fInput('contexto','empresa','Empresa / organización','Ej: Cadena Hotelera Sol',d.empresa)+
+    fInput('contexto','depto','Departamento','Ej: Recursos Humanos',d.depto)+
+    fInput('contexto','personas','Número de personas en el equipo','Ej: 6 (1 responsable + 5 técnicos)',d.personas)+
+    fInput('contexto','fecha_visita','Fecha de visita','Ej: 3 de junio de 2025',d.fecha_visita)+
+    '</div>'+
+    '<div class="card"><div class="ct">Problema y objetivo</div>'+
+    fTA('contexto','problema','¿Por qué te han llamado? Problema conocido','Ej: Quejas internas, falta de organización...',d.problema)+
+    fTA('contexto','objetivo','¿Qué espera la dirección?','Ej: Diagnóstico externo con propuestas de mejora...',d.objetivo)+
+    '</div>'+
+    '<div class="card"><div class="ct">Herramientas y documentación</div>'+
+    fTags('contexto','software','Software conocido',['SAP','Meta4','Factorial','Sage','Excel','Email','Teams','Google Workspace','Notion','Otro'],d.software)+
+    fTA('contexto','docs','Documentación previa disponible','Ej: Organigrama básico del 2022...',d.docs)+
+    '</div>';
+}
+
+function renderEstructura(el){
+  var d=S.current.data.estructura||{};
+  el.innerHTML='<div class="ph"><div><h1>Reunión de apertura</h1><p>Con el responsable — estructura y expectativas</p></div></div>'+
+    '<div class="card"><div class="ct">Organización formal</div>'+
+    fTA('estructura','organigrama','¿Existe organigrama actualizado? ¿Refleja la realidad?','Describe lo que te cuenten...',d.organigrama)+
+    fTA('estructura','roles','Roles y responsabilidades: ¿están claros?','Ej: El jefe también hace tareas de técnico...',d.roles)+
+    fTA('estructura','reporte','¿A quién reporta el departamento? ¿Con quién se coordina?','Ej: Reporta a dirección general...',d.reporte)+
+    '</div>'+
+    '<div class="card"><div class="ct">Expectativas y clima</div>'+
+    fTA('estructura','expectativas','¿Qué espera el responsable de esta consultoría?','Sus palabras exactas si puedes...',d.expectativas)+
+    fStars('estructura','clima','Primera impresión del clima (1=muy tenso / 5=muy bueno)',d.clima)+
+    fTA('estructura','obs','Observaciones de apertura','Tono, actitudes, lo que notes...',d.obs)+
+    '</div>';
+}
+
+function renderEntrevistas(el){
+  var personas=S.current.data.entrevistas||[];
+  var ap=personas.find(function(p){return p.id===S.persona;})||personas[0]||null;
+  if(ap&&S.persona!==ap.id)S.persona=ap.id;
+
+  var tabs=personas.length>0?'<div class="ptabs">'+personas.map(function(p){return '<div class="ptab '+(ap&&p.id===ap.id?'on':'')+'" onclick="selPersona(\''+p.id+'\')"><div class="avatar">'+inits(p.nombre)+'</div>'+esc(p.nombre)+'</div>';}).join('')+'</div>':'';
+
+  var form=!ap?'<div class="alert alert-info">Añade personas del equipo para registrar sus entrevistas individualmente.</div>'
+    :(function(){var r=ap.resp||{};var pid=ap.id;return '<div class="card">'+
+      '<div class="ct" style="display:flex;align-items:center;justify-content:space-between;"><span>'+esc(ap.nombre)+(ap.cargo?' <span style="font-size:13px;color:var(--text2);font-family:DM Sans,sans-serif;">· '+esc(ap.cargo)+'</span>':'')+'</span><button class="btn bsm btndanger" onclick="delPersona(\''+pid+'\')">Eliminar</button></div>'+
+      '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;"><div style="font-size:13px;color:var(--text2);">Cargo: <strong>'+esc(ap.cargo||'No indicado')+'</strong></div><div style="font-size:13px;color:var(--text2);">Antigüedad: <strong>'+esc(ap.antiguedad||'No indicada')+'</strong></div></div>'+
+      '<div class="st">Trabajo y funciones</div>'+
+      pTA(pid,'trabajo','¿En qué consiste tu trabajo día a día?','Anota lo más relevante...',r.trabajo)+
+      pTA(pid,'info_llega','¿Cómo te llega la información? ¿Se pierde algo importante?','Ej: Me entero por los pasillos...',r.info_llega)+
+      '<div class="st">Frustraciones y bloqueos</div>'+
+      pTA(pid,'frustracion','¿Qué es lo que más te dificulta o ralentiza?','Ej: Me piden cosas por canales distintos...',r.frustracion)+
+      pTA(pid,'informal','¿Cómo funcionáis realmente? (vs el procedimiento)','Ej: Nos mandamos WhatsApps en vez de usar el sistema...',r.informal)+
+      '<div class="st">Propuestas y actitud</div>'+
+      pTA(pid,'mejora','¿Qué cambiarías si pudieras?','Ej: Un proceso claro para altas y bajas...',r.mejora)+
+      pStars(pid,'actitud','Actitud ante el cambio (1=muy resistente / 5=muy abierta)',r.actitud)+
+      pTags(pid,'senales','Señales detectadas',['Sobrecarga individual','Confusión de roles','Falta de información','Conflicto con compañeros','Falta de reconocimiento','Buena actitud','Experiencia valiosa','Liderazgo informal','Resistencia al cambio','Conocimiento profundo'],r.senales)+
+      pTA(pid,'obs','Observaciones libres','Lo que quieras recordar de esta persona...',r.obs)+
+      '</div>';})();
+
+  el.innerHTML='<div class="ph"><div><h1>Entrevistas individuales</h1><p>20-30 min por persona</p></div><button class="btn btnp bsm" onclick="addPersonaModal()">+ Añadir persona</button></div>'+tabs+form;
+}
+
+function selPersona(pid){S.persona=pid;renderContent();}
+
+function renderProcesos(el){
+  var d=S.current.data.procesos||{};
+  el.innerHTML='<div class="ph"><div><h1>Análisis de procesos</h1><p>Observación directa y mapeo de flujos</p></div></div>'+
+    '<div class="card"><div class="ct">Identificación</div>'+
+    fTA('procesos','procesos_principales','¿Cuáles son los 3-5 procesos principales?','Ej:\n1. Onboarding  2. Nóminas  3. Selección...',d.procesos_principales)+
+    '</div>'+
+    '<div class="card"><div class="ct">Disfunciones</div>'+
+    fTA('procesos','cuellos','Cuellos de botella','Ej: Solicitudes acumuladas en el email del jefe...',d.cuellos)+
+    fTA('procesos','duplicidades','Tareas duplicadas o redundantes','Ej: Dos personas con los mismos datos en sistemas distintos...',d.duplicidades)+
+    fTA('procesos','manual','Tareas manuales automatizables','Ej: Copian datos de nóminas en Excel a mano cada mes...',d.manual)+
+    fTags('procesos','tipos_disfuncion','Tipos de disfunción',['Sin procedimiento escrito','Procedimiento obsoleto','Proceso solo en la cabeza de una persona','Pasos innecesarios','Sin validación','Sin KPIs','Dependencia del email','Sin responsable claro'],d.tipos_disfuncion)+
+    '</div>'+
+    '<div class="card"><div class="ct">Flujo real</div>'+
+    fStars('procesos','documentado','Grado de documentación (1=nada / 5=todo)',d.documentado)+
+    fTA('procesos','flujo_real','Describe el flujo real de un proceso clave','Ej: Alta de empleado:\n1. Contrato papel → 2. Escaneo → 3. Email...',d.flujo_real)+
+    '</div>';
+}
+
+function renderHerramientas(el){
+  var d=S.current.data.herramientas||{};
+  el.innerHTML='<div class="ph"><div><h1>Herramientas y datos</h1><p>Software, documentación y calidad de la información</p></div></div>'+
+    '<div class="card"><div class="ct">Análisis tecnológico</div>'+
+    fTA('herramientas','software_real','Herramientas que usan realmente','Ej: SAP para nóminas, pero solo 2 personas lo usan...',d.software_real)+
+    fTA('herramientas','duplicidad','¿Hay información duplicada en varios sistemas?','Ej: Datos en SAP, Excel y un Drive desactualizado...',d.duplicidad)+
+    fStars('herramientas','calidad_datos','Calidad de los datos (1=muy mala / 5=excelente)',d.calidad_datos)+
+    '</div>'+
+    '<div class="card"><div class="ct">Documentación y formación</div>'+
+    fTA('herramientas','procedimientos','¿Existen procedimientos escritos? ¿Actualizados?','Ej: Solo un manual del 2019 que nadie lee...',d.procedimientos)+
+    fTA('herramientas','formacion','¿Tienen formación suficiente?','Ej: Nadie ha recibido formación en SAP desde la implementación...',d.formacion)+
+    fTags('herramientas','problemas','Problemas detectados',['Contraseñas compartidas','Acceso sin control','Sin política GDPR','Herramientas obsoletas','Sin formación','Demasiadas herramientas','Falta integración','Sin backup','Sin problema relevante'],d.problemas)+
+    '</div>';
+}
+
+function renderArchivos(el){
+  if(!Array.isArray(S.current.archivos))S.current.archivos=[];
+  var archivos=S.current.archivos;
+  var fileList=archivos.length===0
+    ?'<div style="text-align:center;padding:1.5rem;color:var(--text3);font-size:13px;">Sin archivos adjuntos aún</div>'
+    :archivos.map(function(f){
+      var ext=(f.name||'').split('.').pop().substring(0,4).toUpperCase();
+      var desc = f.description || '';
+      return '<div class="file-item" style="flex-direction:column;align-items:stretch;gap:6px;">'+
+        '<div style="display:flex;align-items:center;gap:10px;">'+
+          '<div class="file-ext">'+esc(ext)+'</div>'+
+          '<span class="fname">'+esc(f.name)+'</span>'+
+          '<span class="fsize">'+formatSize(f.size)+'</span>'+
+          '<button class="btn bsm btnd" onclick="viewFile(\''+f.id+'\',\''+esc(f.name).replace(/\x27/g,"\\\x27")+'\')">Ver</button>'+
+          '<button class="btn bsm btndanger" onclick="delArchivo(\''+f.id+'\')">✕</button>'+
+        '</div>'+
+        '<textarea placeholder="📝 Añade una descripción de este archivo (ej: «Transcripción de la reunión de necesidades del 28/5», «Procedimiento actual de altas de empleados»...)" oninput="updateFileDescription(\''+f.id+'\',this.value)" style="min-height:50px;font-size:12px;background:var(--surface2);">'+esc(desc)+'</textarea>'+
+        '</div>';
+    }).join('');
+
+  el.innerHTML='<div class="ph"><div><h1>Archivos adjuntos</h1><p>Documentos, fotos y material de la visita. Añadir una breve descripción te ayudará al generar informes.</p></div></div>'+
+    '<div class="card"><div class="ct">Subir archivos</div>'+
+    '<div class="drop-zone" onclick="document.getElementById(\'fileInput\').click()" ondragover="event.preventDefault();this.classList.add(\'drag\')" ondragleave="this.classList.remove(\'drag\')" ondrop="handleDrop(event)">'+
+      '<div style="font-size:28px;">📎</div><p>Haz clic o arrastra archivos aquí</p><p style="font-size:11px;color:var(--text3);margin-top:4px;">Cualquier tipo de archivo · Hasta 50MB</p>'+
+    '</div>'+
+    '<input type="file" id="fileInput" multiple style="display:none" onchange="handleFiles(this.files)">'+
+    '<div id="uploadStatus"></div>'+
+    '</div>'+
+    '<div class="card"><div class="ct">Archivos ('+archivos.length+')</div>'+fileList+'</div>';
+}
+
+var descTimers = {};
+function updateFileDescription(fid, desc){
+  // Actualizar en estado local
+  var f = S.current.archivos.find(function(x){return x.id===fid;});
+  if(f) f.description = desc;
+  // Guardar en servidor con debounce
+  if(descTimers[fid]) clearTimeout(descTimers[fid]);
+  setSync('saving');
+  descTimers[fid] = setTimeout(async function(){
+    try {
+      await api('/api/files/'+fid+'/description', {method:'PUT', body:{description: desc}});
+      await saveCurrent();
+      setSync('ok');
+    } catch(e){setSync('err');}
+  }, 800);
+}
+
+function formatSize(b){if(!b)return'';if(b<1024)return b+'B';if(b<1048576)return Math.round(b/1024)+'KB';return(b/1048576).toFixed(1)+'MB';}
+
+function handleDrop(e){e.preventDefault();handleFiles(e.dataTransfer.files);}
+
+async function handleFiles(files){
+  if(!files||files.length===0)return;
+  var us=document.getElementById('uploadStatus');
+  for(var i=0;i<files.length;i++){
+    var f=files[i];
+    if(us)us.innerHTML='<div class="alert alert-blue" style="margin-top:1rem;"><div class="dots"><span></span><span></span><span></span></div> Subiendo '+esc(f.name)+'...</div>';
+    try {
+      var b64=await fileToBase64(f);
+      var fid='f_'+Date.now()+'_'+Math.random().toString(36).substr(2,5);
+      await api('/api/consultancies/'+S.current.id+'/files',{method:'POST',body:{id:fid,name:f.name,mimeType:f.type,size:f.size,base64:b64}});
+      S.current.archivos.push({id:fid,name:f.name,mimeType:f.type,size:f.size});
+      await api('/api/consultancies/'+S.current.id,{method:'PUT',body:S.current});
+    } catch(e){alert('Error subiendo '+f.name+': '+e.message);}
+  }
+  if(us)us.innerHTML='';
+  renderContent();
+}
+
+function fileToBase64(file){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(e){res(e.target.result.split(',')[1]);};r.onerror=rej;r.readAsDataURL(file);});}
+
+async function delArchivo(fid){
+  if(!confirm('¿Eliminar este archivo?'))return;
+  try {
+    await api('/api/files/'+fid,{method:'DELETE'});
+    S.current.archivos=(S.current.archivos||[]).filter(function(f){return f.id!==fid;});
+    await api('/api/consultancies/'+S.current.id,{method:'PUT',body:S.current});
+    renderContent();
+  } catch(e){alert('Error: '+e.message);}
+}
+
+async function viewFile(fid, fname){
+  try {
+    var r = await fetch('/api/files/'+fid+'/download', { headers: { 'x-app-password': PWD } });
+    if(!r.ok) throw new Error('No se pudo descargar');
+    var blob = await r.blob();
+    var url = URL.createObjectURL(blob);
+    var w = window.open(url, '_blank');
+    if(!w){
+      var a = document.createElement('a');
+      a.href = url; a.download = fname; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    setTimeout(function(){URL.revokeObjectURL(url);}, 60000);
+  } catch(e){alert('Error al abrir el archivo: '+e.message);}
+}
+
+function renderSintesis(el){
+  var d=S.current.data.sintesis||{};
+  el.innerHTML='<div class="ph"><div><h1>Síntesis y cierre</h1><p>Valoración global antes del informe</p></div></div>'+
+    '<div class="card"><div class="ct">Valoración global</div>'+
+    fTA('sintesis','impresion','Impresión general (en caliente)','Escribe libremente...',d.impresion)+
+    fTA('sintesis','fortalezas','Fortalezas detectadas','Ej: Equipo con mucha experiencia...',d.fortalezas)+
+    fTA('sintesis','urgente','¿Qué es lo más urgente de resolver?','Ej: Falta de proceso de onboarding...',d.urgente)+
+    fTA('sintesis','resistencias','Resistencias al cambio detectadas','Ej: El responsable parece reticente...',d.resistencias)+
+    '</div>'+
+    '<div class="card"><div class="ct">Clasificación y prioridades</div>'+
+    fStars('sintesis','nivel_disfuncion','Nivel de disfunción global (1=leve / 5=crítico)',d.nivel_disfuncion)+
+    fTags('sintesis','areas_mejora','Áreas prioritarias de mejora',['Definición de roles','Documentación de procesos','Formación','Tecnología/herramientas','Comunicación interna','Liderazgo','Clima y cultura','Gestión de datos','Coordinación interdepartamental','Gestión del tiempo'],d.areas_mejora)+
+    fTA('sintesis','quick_wins','Quick wins (mejoras rápidas, 0-30 días)','Ej: Bandeja compartida, reunión semanal...',d.quick_wins)+
+    fTA('sintesis','cambios','Cambios estructurales necesarios','Ej: Nuevo organigrama, software RRHH, manual...',d.cambios)+
+    '</div>'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn btnp" onclick="nav(\'informe\')">Generar informe →</button></div>';
+}
+
+function renderInforme(el){
+  if(S.reportLoading){
+    el.innerHTML='<div class="ph"><div><h1>Generando informe...</h1></div></div><div class="card" style="text-align:center;padding:3rem;"><div class="dots"><span></span><span></span><span></span></div><p style="margin-top:1rem;color:var(--text2);font-size:14px;">Analizando datos y archivos seleccionados...</p></div>';
+    return;
+  }
+
+  // Si hay un informe activo abierto, mostrarlo
+  if(S.activeReport){
+    el.innerHTML='<div class="ph"><div><h1>'+esc(S.activeReport.title)+'</h1><p>'+esc(S.current.nombre)+(S.current.fecha?' · '+esc(S.current.fecha):'')+'</p></div><div class="no-print" style="display:flex;gap:7px;flex-wrap:wrap;"><button class="btn btnp bsm" onclick="window.print()">Imprimir / PDF</button><button class="btn bsm" onclick="S.activeReport=null;renderContent()">← Volver al historial</button><button class="btn bsm btndanger" onclick="deleteReport(\''+S.activeReport.id+'\')">Eliminar</button></div></div><div id="reportContent">'+S.activeReport.content+'</div>';
+    return;
+  }
+
+  el.innerHTML='<div class="ph"><div><h1>Informes</h1><p>Genera un informe con los datos recogidos y selecciona qué archivos incluir</p></div></div>'+
+    '<div class="card"><div class="ct">Nuevo informe</div>'+
+    '<div class="field"><label>Tipo de informe</label>'+
+    '<select id="reportTypeSel" style="width:100%;padding:9px 11px;font-size:14px;border:1px solid var(--border);border-radius:var(--rsm);background:var(--surface);">'+
+      '<option value="diagnostico_completo">📋 Diagnóstico completo (todas las áreas)</option>'+
+      '<option value="resumen_ejecutivo">⚡ Resumen ejecutivo (1-2 págs para dirección)</option>'+
+      '<option value="plan_accion">🎯 Plan de acción (quick wins + roadmap)</option>'+
+      '<option value="devolucion_equipo">💚 Devolución al equipo (tono empático)</option>'+
+      '<option value="tecnico_procesos">⚙️ Informe técnico de procesos</option>'+
+      '<option value="analisis_herramientas">🔧 Análisis de herramientas tecnológicas</option>'+
+    '</select></div>'+
+    '<div class="field"><label>Título personalizado <span style="color:var(--text3);font-weight:400;">(opcional)</span></label><input type="text" id="reportTitle" placeholder="Ej: Diagnóstico inicial — borrador 1" /></div>'+
+    renderFileSelector()+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem;"><button class="btn btnp" onclick="generateReport()">Generar informe →</button></div>'+
+    '</div>'+
+    '<div class="card"><div class="ct">Historial de informes</div><div id="reportsHistory">Cargando...</div></div>';
+
+  loadReportsHistory();
+}
+
+function renderFileSelector(){
+  var archivos = S.current.archivos || [];
+  if(archivos.length === 0){
+    return '<div class="alert alert-blue" style="font-size:12px;">No hay archivos adjuntos en esta consultoría. El informe se generará solo con los datos del formulario.</div>';
+  }
+  return '<div class="field"><label>Archivos a incluir <span style="color:var(--text3);font-weight:400;">(marca los que quieres que Claude tenga en cuenta)</span></label>'+
+    '<div style="display:flex;gap:6px;margin-bottom:8px;"><button class="btn bsm" onclick="toggleAllFiles(true)">Seleccionar todos</button><button class="btn bsm" onclick="toggleAllFiles(false)">Ninguno</button></div>'+
+    '<div style="display:flex;flex-direction:column;gap:5px;border:1px solid var(--border);border-radius:var(--rsm);padding:8px;max-height:240px;overflow-y:auto;">'+
+    archivos.map(function(f){
+      var ext=(f.name||'').split('.').pop().substring(0,4).toUpperCase();
+      var isSupported = isExtractable(f);
+      var desc = f.description ? '<div style="font-size:11px;color:var(--text2);margin-top:2px;font-style:italic;">📝 '+esc(f.description)+'</div>' : '<div style="font-size:11px;color:var(--text3);margin-top:2px;font-style:italic;">Sin descripción</div>';
+      return '<label style="display:flex;align-items:flex-start;gap:8px;padding:6px;cursor:'+(isSupported?'pointer':'not-allowed')+';opacity:'+(isSupported?'1':'0.5')+';border-bottom:1px solid var(--border);">'+
+        '<input type="checkbox" class="file-check" data-id="'+f.id+'" '+(isSupported?'checked':'disabled')+' style="width:16px;height:16px;margin-top:6px;cursor:'+(isSupported?'pointer':'not-allowed')+';" />'+
+        '<div class="file-ext" style="width:26px;height:26px;font-size:8px;margin-top:2px;">'+esc(ext)+'</div>'+
+        '<div style="flex:1;min-width:0;">'+
+          '<div style="font-size:13px;display:flex;align-items:center;gap:8px;"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(f.name)+'</span><span style="font-size:11px;color:'+(isSupported?'var(--accent)':'var(--text3)')+';white-space:nowrap;">'+(isSupported?'✓ legible':'no procesable')+'</span></div>'+
+          desc+
+        '</div>'+
+        '</label>';
+    }).join('')+
+    '</div></div>';
+}
+
+function isExtractable(f){
+  if(!f.mimeType && !f.name) return false;
+  var name = (f.name||'').toLowerCase();
+  var mt = f.mimeType || '';
+  if(mt === 'application/pdf' || name.endsWith('.pdf')) return true;
+  if(mt.includes('wordprocessingml') || name.endsWith('.docx')) return true;
+  if(mt.startsWith('text/') || name.endsWith('.txt') || name.endsWith('.md') || name.endsWith('.csv')) return true;
+  if(['image/jpeg','image/png','image/gif','image/webp'].includes(mt)) return true;
+  return false;
+}
+
+function toggleAllFiles(check){
+  document.querySelectorAll('.file-check:not(:disabled)').forEach(function(el){ el.checked = check; });
+}
+
+async function loadReportsHistory(){
+  try {
+    var reports = await api('/api/consultancies/'+S.current.id+'/reports');
+    var html = '';
+    if(reports.length === 0){
+      html = '<div style="text-align:center;padding:1.5rem;color:var(--text3);font-size:13px;">Sin informes generados aún</div>';
+    } else {
+      var typeLabels = {
+        diagnostico_completo: '📋 Diagnóstico completo',
+        resumen_ejecutivo: '⚡ Resumen ejecutivo',
+        plan_accion: '🎯 Plan de acción',
+        devolucion_equipo: '💚 Devolución al equipo',
+        tecnico_procesos: '⚙️ Técnico de procesos',
+        analisis_herramientas: '🔧 Análisis de herramientas'
+      };
+      html = reports.map(function(r){
+        var d = new Date(r.created_at);
+        var dateStr = d.toLocaleDateString('es-ES', { day:'numeric', month:'short', year:'numeric' }) + ' · ' + d.toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
+        return '<div class="file-item" style="padding:10px 12px;">'+
+          '<div style="flex:1;overflow:hidden;">'+
+            '<div style="font-size:13px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(r.title)+'</div>'+
+            '<div style="font-size:11px;color:var(--text2);margin-top:2px;">'+(typeLabels[r.report_type]||r.report_type)+' · '+dateStr+'</div>'+
+          '</div>'+
+          '<button class="btn bsm btnd" onclick="openReport(\''+r.id+'\')">Abrir</button>'+
+        '</div>';
+      }).join('');
+    }
+    document.getElementById('reportsHistory').innerHTML = html;
+  } catch(e){
+    document.getElementById('reportsHistory').innerHTML = '<div class="alert alert-danger">Error cargando historial: '+e.message+'</div>';
+  }
+}
+
+async function openReport(rid){
+  try {
+    var r = await api('/api/reports/'+rid);
+    S.activeReport = r;
+    renderContent();
+  } catch(e){alert('Error: '+e.message);}
+}
+
+async function deleteReport(rid){
+  if(!confirm('¿Eliminar este informe? Esta acción no se puede deshacer.'))return;
+  try {
+    await api('/api/reports/'+rid, {method:'DELETE'});
+    S.activeReport = null;
+    renderContent();
+  } catch(e){alert('Error: '+e.message);}
+}
+
+function buildSummary(c){
+  var d=c.data;var o='=== CONSULTORÍA: '+c.nombre+' ===\nEmpresa: '+(c.empresa||'')+'\nDepartamento: '+(c.depto||'')+'\nFecha: '+(c.fecha||'')+'\nConsultora: '+(c.consultora||'')+'\n\n';
+  o+='--- CONTEXTO ---\n';['empresa','depto','personas','problema','objetivo','docs'].forEach(function(k){if(d.contexto&&d.contexto[k])o+=k+': '+d.contexto[k]+'\n';});
+  if(d.contexto&&d.contexto.software)o+='Software: '+d.contexto.software.join(', ')+'\n';
+  o+='\n--- ESTRUCTURA ---\n';['organigrama','roles','reporte','expectativas'].forEach(function(k){if(d.estructura&&d.estructura[k])o+=k+': '+d.estructura[k]+'\n';});
+  if(d.estructura&&d.estructura.clima)o+='Clima inicial (1-5): '+d.estructura.clima+'\n';
+  o+='\n--- ENTREVISTAS ---\n';(d.entrevistas||[]).forEach(function(p){o+='\nPersona: '+p.nombre+(p.cargo?' ('+p.cargo+')':'')+(p.antiguedad?', antig: '+p.antiguedad:'')+'\n';var r=p.resp||{};['trabajo','info_llega','frustracion','informal','mejora','obs'].forEach(function(k){if(r[k])o+=k+': '+r[k]+'\n';});if(r.actitud)o+='Actitud cambio (1-5): '+r.actitud+'\n';if(r.senales&&r.senales.length)o+='Señales: '+r.senales.join(', ')+'\n';});
+  o+='\n--- PROCESOS ---\n';['procesos_principales','cuellos','duplicidades','manual','flujo_real'].forEach(function(k){if(d.procesos&&d.procesos[k])o+=k+': '+d.procesos[k]+'\n';});
+  if(d.procesos&&d.procesos.documentado)o+='Documentación (1-5): '+d.procesos.documentado+'\n';
+  if(d.procesos&&d.procesos.tipos_disfuncion&&d.procesos.tipos_disfuncion.length)o+='Disfunciones: '+d.procesos.tipos_disfuncion.join(', ')+'\n';
+  o+='\n--- HERRAMIENTAS ---\n';['software_real','duplicidad','procedimientos','formacion'].forEach(function(k){if(d.herramientas&&d.herramientas[k])o+=k+': '+d.herramientas[k]+'\n';});
+  if(d.herramientas&&d.herramientas.calidad_datos)o+='Calidad datos (1-5): '+d.herramientas.calidad_datos+'\n';
+  if(d.herramientas&&d.herramientas.problemas&&d.herramientas.problemas.length)o+='Problemas: '+d.herramientas.problemas.join(', ')+'\n';
+  o+='\n--- SÍNTESIS ---\n';['impresion','fortalezas','urgente','resistencias','quick_wins','cambios'].forEach(function(k){if(d.sintesis&&d.sintesis[k])o+=k+': '+d.sintesis[k]+'\n';});
+  if(d.sintesis&&d.sintesis.nivel_disfuncion)o+='Nivel disfunción (1-5): '+d.sintesis.nivel_disfuncion+'\n';
+  if(d.sintesis&&d.sintesis.areas_mejora&&d.sintesis.areas_mejora.length)o+='Áreas mejora: '+d.sintesis.areas_mejora.join(', ')+'\n';
+  o+='\n--- ARCHIVOS ---\n'+(c.archivos||[]).map(function(f){return '- '+f.name;}).join('\n');
+  return o;
+}
+
+var REPORT_PROMPTS = {
+  diagnostico_completo: 'Genera un informe de DIAGNÓSTICO ORGANIZACIONAL COMPLETO. Estructura:\n1. Resumen ejecutivo\n2. Análisis por área: Estructura y roles / Procesos / Personas y cultura / Herramientas y datos\n3. Diagnóstico de disfunciones (problemas reales con impacto en el negocio)\n4. Fortalezas detectadas\n5. Recomendaciones priorizadas: Quick wins (0-30 días) / Medio plazo (1-3 meses) / Cambios estructurales (3-12 meses)\n6. Conclusión',
+  resumen_ejecutivo: 'Genera un RESUMEN EJECUTIVO breve (1-2 páginas) para la dirección de la empresa. Tono directo, ejecutivo, orientado a decisiones. Estructura:\n1. Situación actual (3-4 frases contundentes)\n2. Hallazgos clave (5-7 puntos con impacto)\n3. Riesgos detectados\n4. Recomendaciones priorizadas (top 5)\n5. Próximos pasos sugeridos',
+  plan_accion: 'Genera un PLAN DE ACCIÓN concreto y ejecutable. Estructura:\n1. Objetivo y alcance\n2. Quick wins (acciones de 0-30 días con responsable sugerido y resultado esperado)\n3. Iniciativas a medio plazo (1-3 meses, con hitos)\n4. Cambios estructurales (3-12 meses, con dependencias)\n5. Indicadores de éxito por iniciativa\n6. Riesgos y mitigaciones\nUsa formato de tabla cuando ayude.',
+  devolucion_equipo: 'Genera un INFORME DE DEVOLUCIÓN AL EQUIPO con tono cálido, humano y respetuoso. El objetivo es compartir con el equipo lo que se ha observado, valorando su trabajo y proponiendo mejoras de forma constructiva. Estructura:\n1. Lo que hemos visto (descripción honesta y empática del trabajo del equipo)\n2. Lo que está funcionando bien (fortalezas, reconocimientos)\n3. Las dificultades que habéis compartido (sin culpabilizar)\n4. Lo que proponemos juntos (mejoras como oportunidades, no como críticas)\n5. Cómo seguimos\nEvita lenguaje jerárquico o frío. Habla al equipo, no de él.',
+  tecnico_procesos: 'Genera un INFORME TÉCNICO DE PROCESOS centrado en el funcionamiento operativo. Estructura:\n1. Inventario de procesos actuales\n2. Mapeo del flujo real vs. el flujo ideal\n3. Cuellos de botella y disfunciones técnicas\n4. Análisis del stack tecnológico (herramientas, integraciones, calidad de datos)\n5. Tareas automatizables identificadas\n6. Propuesta de rediseño de procesos prioritarios\n7. Recomendaciones tecnológicas concretas\nTono técnico, preciso, orientado a operativa.',
+  analisis_herramientas: 'Genera un ANÁLISIS ESPECIALIZADO DE LAS HERRAMIENTAS TECNOLÓGICAS que utiliza el departamento. Aporta valor diferencial mostrando conocimiento profundo de las herramientas concretas que han mencionado.\n\nEstructura:\n1. Inventario de herramientas actuales (lista clara: nombre, función que cumplen, cómo la usan)\n2. Análisis individual por herramienta. Para cada una incluye:\n   - Capacidades clave que ofrece la herramienta (las que conoces de ese producto en concreto)\n   - Qué uso le están dando actualmente vs su potencial\n   - Funcionalidades infrautilizadas que les podrían beneficiar (sé específico con nombres de módulos/features reales si los conoces)\n   - Buenas prácticas de uso de esa herramienta concreta\n3. Análisis de integraciones posibles entre las herramientas que usan. Identifica:\n   - Integraciones nativas que existen entre sus herramientas y que probablemente no estén aprovechando\n   - Datos que actualmente duplican manualmente y que podrían sincronizarse automáticamente\n   - Conectores, APIs o middlewares relevantes (Zapier, Make, conexiones nativas...)\n4. Brechas detectadas (qué necesitan que ninguna de sus herramientas actuales cubre bien)\n5. Recomendaciones priorizadas:\n   - Acciones inmediatas de optimización con lo que YA tienen (sin coste adicional)\n   - Configuraciones, formaciones o reorganizaciones recomendadas\n   - Inversiones a considerar (nuevas herramientas o módulos) solo si están claramente justificadas\n6. Posibles ahorros (en tiempo, errores, licencias duplicadas)\n\nIMPORTANTE: Aporta conocimiento real y específico de las herramientas que mencionan (SAP, Salesforce, A3, Sage, Factorial, Meta4, etc.). Si una empresa usa A3 y Salesforce, no digas genéricamente "se pueden integrar ERPs y CRMs" — di qué módulos concretos, qué casos de uso, qué información se podría sincronizar. Si no conoces a fondo una herramienta concreta, sé honesta y propón validarlo con su proveedor.\n\nTono: experto, concreto, orientado al ROI. Como una consultora especializada en tecnología para procesos.'
+};
+
+async function generateReport(){
+  var reportType = document.getElementById('reportTypeSel').value;
+  var customTitle = document.getElementById('reportTitle').value.trim();
+  var selectedFiles = Array.from(document.querySelectorAll('.file-check:checked')).map(function(el){return el.getAttribute('data-id');});
+
+  S.reportLoading=true;renderContent();
+  var summary=buildSummary(S.current);
+  var typeInstructions = REPORT_PROMPTS[reportType] || REPORT_PROMPTS.diagnostico_completo;
+
+  var prompt='Eres una consultora de procesos organizacionales con amplia experiencia y mirada humanista. Basándote en los datos de campo de una consultoría real (y en los archivos adjuntos si los hay), genera un informe profesional, creativo, muy personalizado y verdaderamente útil.\n\n'+summary+'\n\n--- TIPO DE INFORME SOLICITADO ---\n'+typeInstructions+'\n\n--- FORMATO DE SALIDA ---\nDevuelve ÚNICAMENTE el HTML del contenido del informe, SIN envolverlo en bloques de código (no uses ```html ni ```), SIN DOCTYPE, sin etiquetas html/head/body. Empieza directamente con un <div class="report-section">. Cada sección principal va en su propio <div class="report-section"> con <h2> al inicio. Subsecciones con <h3>. Usa <ul>/<li> y <p> según convenga.\n\n--- TONO ---\nProfesional, directo, honesto y empático. Nada de lenguaje corporativo vacío. Sé muy específico usando los datos reales. Usa los nombres reales de las personas cuando aporte valor. El informe debe sentirse escrito para ESTA organización concreta, no genérico. Si hay archivos adjuntos, intégralos naturalmente en el análisis.';
+
+  try {
+    var data=await api('/api/generate-report',{method:'POST',body:{
+      consultancyId: S.current.id,
+      prompt: prompt,
+      fileIds: selectedFiles,
+      reportType: reportType,
+      title: customTitle || null
+    }});
+    S.activeReport = { id: data.reportId, title: data.title, content: data.report, report_type: reportType };
+  } catch(e){
+    S.activeReport = { title: 'Error', content: '<div class="report-section"><h2>Error</h2><p>'+e.message+'</p></div>' };
+  }
+  S.reportLoading=false;renderContent();
+}
+
+function delConsultConfirm(){
+  showModal('<h2>¿Eliminar consultoría?</h2><p style="color:var(--text2);font-size:14px;margin-bottom:1.5rem;">Se borrarán todos los datos y archivos. Esta acción no se puede deshacer.</p><div class="modal-act"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn btndanger" onclick="doDelConsult()">Sí, eliminar</button></div>');
+}
+
+async function doDelConsult(){
+  try {
+    await api('/api/consultancies/'+S.current.id,{method:'DELETE'});
+    closeModal();
+    S.current=null;S.active=null;
+    await loadConsultancies();
+    renderContent();
+  } catch(e){alert('Error: '+e.message);}
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sov').classList.toggle('open');
+}
+
+function renderAdmin(el){
+  el.innerHTML = '<div class="ph"><div><h1>Administración</h1><p>Vista general de la base de datos y estado del sistema</p></div><button class="btn bsm" onclick="renderAdmin(document.getElementById(\'appContent\'))">↻ Actualizar</button></div>'+
+    '<div id="adminStats">Cargando estadísticas...</div>'+
+    '<div class="card"><div class="ct">Salud del sistema</div><div id="adminHealth">Cargando...</div></div>'+
+    '<div class="card"><div class="ct">Consultorías</div><div id="adminConsults">Cargando...</div></div>'+
+    '<div class="card"><div class="ct">Archivos</div><div id="adminFiles">Cargando...</div></div>'+
+    '<div class="card"><div class="ct">Informes generados</div><div id="adminReports">Cargando...</div></div>';
+
+  loadAdminStats();
+  loadAdminHealth();
+  loadAdminConsults();
+  loadAdminFiles();
+  loadAdminReports();
+}
+
+async function loadAdminStats(){
+  try {
+    var s = await api('/api/admin/stats');
+    document.getElementById('adminStats').innerHTML =
+      '<div class="g3" style="margin-bottom:1.25rem;">'+
+        '<div class="stat"><div class="sl">Consultorías</div><div class="sv">'+s.consultancies+'</div><div class="sd">en la base de datos</div></div>'+
+        '<div class="stat"><div class="sl">Archivos</div><div class="sv">'+s.files+'</div><div class="sd">'+s.filesWithText+' con texto extraído</div></div>'+
+        '<div class="stat"><div class="sl">Informes</div><div class="sv">'+s.reports+'</div><div class="sd">generados en total</div></div>'+
+      '</div>'+
+      '<div class="g2" style="margin-bottom:1.25rem;">'+
+        '<div class="stat"><div class="sl">Tamaño archivos</div><div class="sv" style="font-size:20px;">'+formatSize(s.totalSize)+'</div><div class="sd">datos binarios subidos</div></div>'+
+        '<div class="stat"><div class="sl">Tamaño base de datos</div><div class="sv" style="font-size:20px;">'+esc(s.dbSize)+'</div><div class="sd">espacio total ocupado</div></div>'+
+      '</div>';
+  } catch(e) {
+    document.getElementById('adminStats').innerHTML = '<div class="alert alert-danger">Error: '+e.message+'</div>';
+  }
+}
+
+async function loadAdminHealth(){
+  try {
+    var h = await api('/api/admin/health');
+    var dbOk = h.database === 'ok';
+    var apiOk = h.anthropic === 'configured';
+    document.getElementById('adminHealth').innerHTML =
+      '<div style="display:flex;flex-direction:column;gap:6px;">'+
+        '<div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;border-radius:50%;background:'+(dbOk?'var(--accent)':'var(--danger)')+';"></span><span style="font-size:13px;">Base de datos PostgreSQL: <strong>'+(dbOk?'conectada':h.database)+'</strong></span></div>'+
+        '<div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;border-radius:50%;background:'+(apiOk?'var(--accent)':'var(--danger)')+';"></span><span style="font-size:13px;">API de Claude: <strong>'+(apiOk?'configurada':'falta API key')+'</strong></span></div>'+
+        '<div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;border-radius:50%;background:'+(h.extraction.pdf?'var(--accent)':'var(--amber)')+';"></span><span style="font-size:13px;">Extracción de PDF: <strong>'+(h.extraction.pdf?'activa':'no disponible')+'</strong></span></div>'+
+        '<div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;border-radius:50%;background:'+(h.extraction.docx?'var(--accent)':'var(--amber)')+';"></span><span style="font-size:13px;">Extracción de Word: <strong>'+(h.extraction.docx?'activa':'no disponible')+'</strong></span></div>'+
+      '</div>';
+  } catch(e) {
+    document.getElementById('adminHealth').innerHTML = '<div class="alert alert-danger">Error: '+e.message+'</div>';
+  }
+}
+
+async function loadAdminConsults(){
+  try {
+    var list = await api('/api/consultancies');
+    if(list.length === 0){
+      document.getElementById('adminConsults').innerHTML = '<div style="text-align:center;padding:1rem;color:var(--text3);font-size:13px;">Sin consultorías aún</div>';
+      return;
+    }
+    var html = '<div style="overflow-x:auto;"><table style="width:100%;font-size:12px;border-collapse:collapse;">'+
+      '<thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Nombre</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Empresa</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Fecha</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Última edición</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);"></th></tr></thead><tbody>'+
+      list.map(function(c){
+        return '<tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 6px;">'+esc(c.nombre||'')+'</td><td style="padding:8px 6px;color:var(--text2);">'+esc(c.empresa||'')+'</td><td style="padding:8px 6px;color:var(--text2);">'+esc(c.fecha||'')+'</td><td style="padding:8px 6px;color:var(--text2);">'+formatDate(c.updated_at)+'</td><td style="padding:8px 6px;"><button class="btn bsm btnd" onclick="selectC(\''+c.id+'\')">Abrir</button></td></tr>';
+      }).join('')+
+      '</tbody></table></div>';
+    document.getElementById('adminConsults').innerHTML = html;
+  } catch(e) {
+    document.getElementById('adminConsults').innerHTML = '<div class="alert alert-danger">Error: '+e.message+'</div>';
+  }
+}
+
+async function loadAdminFiles(){
+  try {
+    var list = await api('/api/admin/files');
+    if(list.length === 0){
+      document.getElementById('adminFiles').innerHTML = '<div style="text-align:center;padding:1rem;color:var(--text3);font-size:13px;">Sin archivos subidos aún</div>';
+      return;
+    }
+    var html = '<div style="overflow-x:auto;"><table style="width:100%;font-size:12px;border-collapse:collapse;">'+
+      '<thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Archivo</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Consultoría</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Tamaño</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Texto</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Subido</th></tr></thead><tbody>'+
+      list.map(function(f){
+        return '<tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 6px;">'+esc(f.name)+'</td><td style="padding:8px 6px;color:var(--text2);">'+esc(f.consultancy_name||'-')+'</td><td style="padding:8px 6px;color:var(--text2);">'+formatSize(f.size)+'</td><td style="padding:8px 6px;color:'+(f.has_text?'var(--accent)':'var(--text3)')+';">'+(f.has_text?'✓':'—')+'</td><td style="padding:8px 6px;color:var(--text2);">'+formatDate(f.created_at)+'</td></tr>';
+      }).join('')+
+      '</tbody></table></div>';
+    document.getElementById('adminFiles').innerHTML = html;
+  } catch(e) {
+    document.getElementById('adminFiles').innerHTML = '<div class="alert alert-danger">Error: '+e.message+'</div>';
+  }
+}
+
+async function loadAdminReports(){
+  try {
+    var list = await api('/api/admin/reports');
+    if(list.length === 0){
+      document.getElementById('adminReports').innerHTML = '<div style="text-align:center;padding:1rem;color:var(--text3);font-size:13px;">Sin informes generados aún</div>';
+      return;
+    }
+    var typeLabels = {
+      diagnostico_completo: 'Diagnóstico completo',
+      resumen_ejecutivo: 'Resumen ejecutivo',
+      plan_accion: 'Plan de acción',
+      devolucion_equipo: 'Devolución al equipo',
+      tecnico_procesos: 'Técnico de procesos',
+      analisis_herramientas: 'Análisis de herramientas'
+    };
+    var html = '<div style="overflow-x:auto;"><table style="width:100%;font-size:12px;border-collapse:collapse;">'+
+      '<thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Título</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Tipo</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Consultoría</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Tamaño</th><th style="text-align:left;padding:8px 6px;font-weight:500;color:var(--text2);">Fecha</th></tr></thead><tbody>'+
+      list.map(function(r){
+        return '<tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 6px;">'+esc(r.title)+'</td><td style="padding:8px 6px;color:var(--text2);">'+(typeLabels[r.report_type]||r.report_type)+'</td><td style="padding:8px 6px;color:var(--text2);">'+esc(r.consultancy_name||'-')+'</td><td style="padding:8px 6px;color:var(--text2);">'+formatSize(r.content_size)+'</td><td style="padding:8px 6px;color:var(--text2);">'+formatDate(r.created_at)+'</td></tr>';
+      }).join('')+
+      '</tbody></table></div>';
+    document.getElementById('adminReports').innerHTML = html;
+  } catch(e) {
+    document.getElementById('adminReports').innerHTML = '<div class="alert alert-danger">Error: '+e.message+'</div>';
+  }
+}
+
+function formatDate(d){
+  if(!d) return '-';
+  var dt = new Date(d);
+  return dt.toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric'})+' '+dt.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+}
+
+// ── INIT ──
+checkAuth();
+</script>
+</body>
+</html>
